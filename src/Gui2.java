@@ -46,7 +46,7 @@ public class Gui2 implements ActionListener {
 		lblNewLabel.setBounds(74, 200, 322, 46);
 		frame.getContentPane().add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("<html>Z desnim klikom na polje v mreži, ki se osvetli, nanj postavimo zastavico. Tako poje je označeno in ga lahko odprete le če s ponovnim desnim klikom prej odmaknete zastavico.</html>");
+		JLabel lblNewLabel_1 = new JLabel("<html>Z desnim klikom na polje v mreži, ki se osvetli, postavimo zastavico. Tako poje je označeno in ga lahko odprete le če s ponovnim desnim klikom prej odmaknete zastavico.</html>");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel_1.setBounds(74, 270, 322, 64);
 		frame.getContentPane().add(lblNewLabel_1);
