@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-public class Gui {
+public class Gui { // glavni razred, ki definira spremenljivke in kodo za igro
 
 	JFrame frame = new JFrame();
 
@@ -23,6 +23,7 @@ public class Gui {
 
 	public int mx = -100;
 	public int my = -100;
+	public int number = 0;
 
 	public int smileyX = 300;
 	public int smileyY = 2;
@@ -53,22 +54,22 @@ public class Gui {
 
 	Random rand = new Random();
 
-	int[][] mines = new int[16][9];
-	int[][] neighbours = new int[16][9];
-	boolean[][] revealed = new boolean[16][9];
-	boolean[][] flagged = new boolean[16][9];
+	int[][] mines = new int[16][9]; // tabela mines definira lokacijo min v polju 16x9
+	int[][] neighbours = new int[16][9];// tabela neighbours definira število min v bližini določenega polja
+	boolean[][] revealed = new boolean[16][9];// tabela reveald definira stanje odprtosti določenega polja
+	boolean[][] flagged = new boolean[16][9];// tabela reveald definira stanje označenosti z zastavico določenega polja
 
-	public Gui() {
+	public Gui() { // Konstruktor razreda GUI, ki ustvari grafični vmesnik
 
-		frame.setTitle("MINESWEEPER");
+		frame.setTitle("MINOLOVEC");
 		frame.setSize(654, 439);
 		frame.setState(Frame.NORMAL);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // nastavi, da klik na X ustavi program
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		frame.setResizable(false);
 
-		for (int i = 0; i < 16; i++) {
+		for (int i = 0; i < 16; i++) { // nastavi, da so vsa polja prvotno zakrita
 			for (int j = 0; j < 9; j++) {
 				revealed[i][j] = false;
 			}
@@ -85,10 +86,10 @@ public class Gui {
 
 	}
 
-	public class Board extends JPanel {
+	public class Board extends JPanel { // Jpanel, na katerega rišemo komponente glavnega grafičnega vmesnika
 
 		public void paintComponent(Graphics g) {
-			g.setColor(Color.DARK_GRAY);
+			g.setColor(Color.DARK_GRAY); 
 			g.fillRect(0, 0, 654, 410);
 			g.setColor(Color.GRAY);
 			for (int i = 0; i < 16; i++) {
@@ -107,9 +108,10 @@ public class Gui {
 					}
 
 					if (mx >= spacing + i * 40 && mx < spacing + i * 40 + 40 - 2 * spacing
-							&& my >= spacing + j * 40 + 40 + 26 && my < spacing + j * 40 + 40 + 26 + 40 - 2 * spacing) {
-						g.setColor(Color.lightGray);
+							&& my >= spacing + j * 40 + 40 + 26 && my < spacing + j * 40 + 40 + 26 + 40 - 2 * spacing) { 
+						g.setColor(Color.lightGray); // osvetljevanje kvadratka nad katerim se nahajamo z miško
 					}
+					// generiranje igralne mreže
 					g.fillRect(spacing + i * 40, spacing + j * 40 + 40, 40 - 2 * spacing, 40 - 2 * spacing);
 					if (revealed[i][j] == true) {
 						g.setColor(Color.black);
@@ -133,7 +135,7 @@ public class Gui {
 							}
 							g.setFont(new Font("Tahoma", Font.BOLD, 20));
 							g.drawString(Integer.toString(neighbours[i][j]), i * 40 + 14, j * 40 + 40 + 27);
-						} else if (mines[i][j] == 1 && flagged[i][j] == false) {
+						} else if (mines[i][j] == 1 && flagged[i][j] == false) { // izris mine
 							g.fillRect(i * 40 + 5 + 10, j * 40 + 40 + 5 + 5, 10, 20);
 							g.fillRect(i * 40 + 5 + 5, j * 40 + 40 + 5 + 10, 20, 10);
 							g.fillRect(i * 40 + 5 + 7, j * 40 + 40 + 5 + 7, 16, 16);
@@ -146,7 +148,7 @@ public class Gui {
 				}
 			}
 
-			// smiley painting
+			// izris smeškota
 			g.setColor(Color.yellow);
 			g.fillOval(smileyX, smileyY, 40, 40);
 			g.setColor(Color.black);
@@ -163,7 +165,7 @@ public class Gui {
 				g.fillRect(smileyX + 28, smileyY + 27, 2, 2);
 			}
 
-			// time counter painting
+			// izris časovnika
 			g.setColor(Color.black);
 			g.fillRect(timeX, timeY, 70, 35);
 			if (victory == false && defeat == false && prviKlik == true) {
@@ -190,7 +192,7 @@ public class Gui {
 				g.drawString(Integer.toString(sec), timeX, timeY + 32);
 			}
 
-			// message painting
+			// izpis končnega sporočila
 
 			if (victory == true) {
 				g.setColor(Color.green);
@@ -209,7 +211,7 @@ public class Gui {
 				g.drawString(vicMes, vicMesX, vicMesY);
 			}
 
-			// flag painting
+			// izris zastavice
 			for (int i = 0; i < 16; i++) {
 				for (int j = 0; j < 9; j++) {
 					if (flagged[i][j] == true) {
@@ -224,7 +226,7 @@ public class Gui {
 					}
 				}
 			}
-			// flagged number
+			// izpis ševila potrebni zastavic
 			int totalFlagged = 0;
 			for (int i = 0; i < 16; i++) {
 				for (int j = 0; j < 9; j++) {
@@ -240,8 +242,10 @@ public class Gui {
 			} else
 				g.setColor(Color.white);
 			g.setFont(new Font("Tahoma", Font.PLAIN, 40));
-			int number = totalMines() - totalFlagged;
-			if (number < 10) {
+			number = totalMines() - totalFlagged;
+			if (number <= 0) {
+				g.drawString("00", 0, timeY + 32);
+			} else if (number < 10) {
 				g.drawString("0" + Integer.toString(number), 0, timeY + 32);
 			} else {
 				g.drawString(Integer.toString(number), 0, timeY + 32);
@@ -251,7 +255,7 @@ public class Gui {
 				start = true;
 			}
 
-			// info
+			// izris gumba za info
 			g.setColor(Color.black);
 			g.fillRect(150, 2, 40, 40);
 			g.setColor(Color.white);
@@ -479,7 +483,7 @@ public class Gui {
 				mx = e.getX();
 				my = e.getY();
 				if (victory == false && defeat == false) {
-					if (inBoxX() != -1 && inBoxY() != -1) {
+					if (inBoxX() != -1 && inBoxY() != -1 && number > 0) {
 						if (flagged[inBoxX()][inBoxY()] == true) {
 							flagged[inBoxX()][inBoxY()] = false;
 						} else
@@ -521,6 +525,7 @@ public class Gui {
 		prviKlik = false;
 		start = false;
 		info = false;
+		number = 0;
 
 		vicMesY = -50;
 		vicMes = "N";
@@ -730,7 +735,6 @@ public class Gui {
 					}
 				}
 			}
-
 		}
 		if (cellX1 >= 0 && cellY1 >= 0) {
 			find_empty_cells(cellX1, cellY1);
@@ -757,5 +761,4 @@ public class Gui {
 			find_empty_cells(cellX8, cellY8);
 		}
 	}
-
 }
