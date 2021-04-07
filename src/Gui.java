@@ -14,7 +14,7 @@ public class Gui { // glavni razred, ki definira spremenljivke in kodo za igro
 	Date startDate = new Date();
 	Date endDate;
 
-	public int screenHeight = 410;
+	public int screenHeight = 439;
 	public int screenWidth = 654;
 
 	int spacing = 5;
@@ -54,22 +54,35 @@ public class Gui { // glavni razred, ki definira spremenljivke in kodo za igro
 
 	Random rand = new Random();
 
-	int[][] mines = new int[16][9]; // tabela mines definira lokacijo min v polju 16x9
-	int[][] neighbours = new int[16][9];// tabela neighbours definira število min v bližini določenega polja
-	boolean[][] revealed = new boolean[16][9];// tabela reveald definira stanje odprtosti določenega polja
-	boolean[][] flagged = new boolean[16][9];// tabela reveald definira stanje označenosti z zastavico določenega polja
-
-	public Gui() { // Konstruktor razreda GUI, ki ustvari grafični vmesnik
+	// tabela mines definira lokacijo min v polju 16x9
+	int[][] mines = new int[16][9];
+	// tabela neighbours definira število min v bližini določenega polja
+	int[][] neighbours = new int[16][9];
+	// tabela reveald definira stanje odprtosti določenega polja
+	boolean[][] revealed = new boolean[16][9];
+	// tabela flagged definira stanje označenosti z zastavico določenega polja
+	boolean[][] flagged = new boolean[16][9];
+	
+	// Konstruktor razreda GUI, ki ustvari grafični vmesnik
+	public Gui() { 
 
 		frame.setTitle("MINOLOVEC");
-		frame.setSize(654, 439);
+		// oknu nastavi naslov
+		frame.setSize(screenWidth, screenHeight);
+		// oknu nastavi velikost
 		frame.setState(Frame.NORMAL);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // nastavi, da klik na X ustavi program
+		// dovoli, da aplikacijo ikonificiramo
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+		// programu določi, da se ob kliku na X ustavi
 		frame.setLocationRelativeTo(null);
+		// določi, da se okno vedno odpre na sredini ekrana
 		frame.setVisible(true);
+		// določi, da je okno vidno
 		frame.setResizable(false);
+		// določi, da oknu ne moramo spreminjati velikosti
 
-		for (int i = 0; i < 16; i++) { // nastavi, da so vsa polja prvotno zakrita
+		// nastavi, da so vsa polja prvotno zakrita
+		for (int i = 0; i < 16; i++) { 
 			for (int j = 0; j < 9; j++) {
 				revealed[i][j] = false;
 			}
@@ -86,10 +99,12 @@ public class Gui { // glavni razred, ki definira spremenljivke in kodo za igro
 
 	}
 
-	public class Board extends JPanel { // Jpanel, na katerega rišemo komponente glavnega grafičnega vmesnika
+	public class Board extends JPanel { 
+	// Jpanel, na katerega rišemo komponente glavnega grafičnega vmesnika
 
 		public void paintComponent(Graphics g) {
-			g.setColor(Color.DARK_GRAY); 
+			// komponenta, ki omogoča risanje na JFrame
+			g.setColor(Color.DARK_GRAY);
 			g.fillRect(0, 0, 654, 410);
 			g.setColor(Color.GRAY);
 			for (int i = 0; i < 16; i++) {
@@ -107,9 +122,10 @@ public class Gui { // glavni razred, ki definira spremenljivke in kodo za igro
 						}
 					}
 
-					if (mx >= spacing + i * 40 && mx < spacing + i * 40 + 40 - 2 * spacing
-							&& my >= spacing + j * 40 + 40 + 26 && my < spacing + j * 40 + 40 + 26 + 40 - 2 * spacing) { 
-						g.setColor(Color.lightGray); // osvetljevanje kvadratka nad katerim se nahajamo z miško
+					if (mx >= spacing + i * 40 + 6 && mx < spacing + i * 40 + 40
+							&& my >= spacing + j * 40 + 40 + 26 && my < spacing + j * 40 + 40 + 26 + 40 - spacing) {
+						g.setColor(Color.lightGray); 
+						// osvetljevanje kvadratka nad katerim se nahajamo z miško
 					}
 					// generiranje igralne mreže
 					g.fillRect(spacing + i * 40, spacing + j * 40 + 40, 40 - 2 * spacing, 40 - 2 * spacing);
@@ -463,7 +479,6 @@ public class Gui { // glavni razred, ki definira spremenljivke in kodo za igro
 							}
 						}
 					}
-					System.out.println(m);
 
 				} else {
 					if (victory == false && defeat == false) {
@@ -548,8 +563,8 @@ public class Gui { // glavni razred, ki definira spremenljivke in kodo za igro
 
 	public boolean inSmiley() {
 		int dif = (int) Math
-				.sqrt(Math.pow(Math.abs(mx - smileyCenterX), 2) + Math.pow(Math.abs(my - smileyCenterY), 2));
-		if (dif < 35) {
+				.sqrt(Math.pow(mx - smileyCenterX, 2) + Math.pow(my - smileyCenterY, 2));
+		if (dif < 50) {
 			return true;
 		}
 		return false;
@@ -565,8 +580,8 @@ public class Gui { // glavni razred, ki definira spremenljivke in kodo za igro
 	public int inBoxX() {
 		for (int i = 0; i < 16; i++) {
 			for (int j = 0; j < 9; j++) {
-				if (mx >= spacing + i * 40 && mx < spacing + i * 40 + 40 - 2 * spacing
-						&& my >= spacing + j * 40 + 40 + 26 && my < spacing + j * 40 + 40 + 26 + 40 - 2 * spacing) {
+				if (mx >= spacing + i * 40 + 6 && mx < spacing + i * 40 + 40
+						&& my >= spacing + j * 40 + 40 + 26 && my < spacing + j * 40 + 40 + 26 + 40 - spacing) {
 					return i;
 				}
 			}
@@ -577,8 +592,8 @@ public class Gui { // glavni razred, ki definira spremenljivke in kodo za igro
 	public int inBoxY() {
 		for (int i = 0; i < 16; i++) {
 			for (int j = 0; j < 9; j++) {
-				if (mx >= spacing + i * 40 && mx < spacing + i * 40 + 40 - 2 * spacing
-						&& my >= spacing + j * 40 + 40 + 26 && my < spacing + j * 40 + 40 + 26 + 40 - 2 * spacing) {
+				if (mx >= spacing + i * 40 + 6 && mx < spacing + i * 40 + 40
+						&& my >= spacing + j * 40 + 40 + 26 && my < spacing + j * 40 + 40 + 26 + 40 - spacing) {
 					return j;
 				}
 			}
