@@ -1,28 +1,26 @@
-
 public class Main implements Runnable {
 
 	Gui gui = new Gui();
 	Gui2 infoWindow = new Gui2();
 
 	public static void main(String[] args) {
-		new Thread(new Main()).start();
+		new Thread(new Main()).start(); // nit nam omogoča da program izvaja več delov naenkrat
 	}
-
+	
 	@Override
 	public void run() {
-		while (true) {
+		while (true) { // neskončna zanka
 			gui.frame.repaint();
 			if (gui.resetter == false) {
-				gui.checkVictroyStatus();		
+				// preverjanje stanja igre zmaga/poraz
+				gui.checkVictroyStatus(); 	
 			}
 			if (gui.info == true) {
-				infoWindow.frame.setVisible(true);
+				// odpiranje okna z informacijami ob kliku na vprašaj
+				infoWindow.frame.setVisible(true); 
 				infoWindow.open = true;
 				gui.info = false;
-			}else if (gui.info = false && infoWindow.open == false) {
-				infoWindow.frame.setVisible(false);
 			}
 		}
 	}
-
 }
