@@ -18,7 +18,6 @@ public class Main implements Runnable {
 			if (gui.info == true) {
 				// odpiranje okna z informacijami ob kliku na vprašaj
 				infoWindow.frame.setVisible(true); 
-				infoWindow.open = true;
 				gui.info = false;
 			}
 		}
