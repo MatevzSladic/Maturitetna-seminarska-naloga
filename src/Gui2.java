@@ -43,7 +43,7 @@ public class Gui2 implements ActionListener {
 		frame.getContentPane().add(informacije);
 
 		informacije_1 = new JLabel("<html>Z desnim klikom na polje v mreži, ki se osvetli, "
-				+ "nanj postavimo zastavico. Tako poje je označeno in ga lahko odprete le če s ponovnim "
+				+ "nanj postavimo zastavico. Tako poje je označeno in ga lahko odprete le, če s ponovnim "
 				+ "desnim klikom prej odmaknete zastavico.</html>");
 		informacije_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		informacije_1.setBounds(74, 270, 322, 64);
@@ -52,7 +52,7 @@ public class Gui2 implements ActionListener {
 		informacije_2 = new JLabel(
 				"<html>Cilj igre je, v čim krajšem času odpreti vsa polja v mreži, ki ne vsebujejo bombe. "
 						+ "Polja ki vsebujejo bombe je potrebno označiti z zastavico (desni klik). Število bomb v mreži,"
-						+ " ki jih je potrebno označiti je izpisano v levem zgornjem kotu."
+						+ " ki jih je potrebno označiti, je izpisano v levem zgornjem kotu."
 						+ " Ob levem kliku na polje in njegovem odprtju se lahko pokaže ena izmed treh možnosti:"
 						+ "<br>  1. Pokaže se bomba in igra se konča, saj ste odprli nedovoljeno polje."
 						+ "<br>  2. Pokaže se prazno polje. To pomeni da v sosednjih 8 poljih ni nobene bombe."
